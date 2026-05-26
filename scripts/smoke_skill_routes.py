@@ -16,6 +16,10 @@ def read_yaml(path: Path) -> dict:
 
 
 def main() -> None:
+    skill_text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    for marker in ["回答真实性门禁", "真实面试中过不了", "happy path"]:
+        if marker not in skill_text:
+            raise SystemExit(f"FAIL: missing authenticity gate marker: {marker}")
     index = read_yaml(INDEX)
     assets = index["assets"]
     sample = random.Random(7).sample(assets, 10)
