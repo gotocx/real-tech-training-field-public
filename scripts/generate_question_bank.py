@@ -646,7 +646,7 @@ def build_algorithm_assets(index: list[dict]) -> None:
             prompt=pattern["prompt"],
             knowledge_points=pattern["points"],
             standard_solution={
-                "summary": "使用可解释的数据结构或动态规划状态，先覆盖边界，再提交实现。",
+                "summary": "使用题目匹配的核心策略和数据结构，先覆盖边界，再提交实现。",
                 "file": f"assets/code-bank/standard/{asset_id}.js",
                 "expected_complexity": pattern["complexity"],
             },
@@ -661,9 +661,9 @@ def build_algorithm_assets(index: list[dict]) -> None:
             ],
             edge_cases=["空输入", "单元素", "重复值", "负数或极端边界"],
             follow_up_questions=[
-                "如果输入规模扩大 100 倍，瓶颈在哪里？",
-                "你会增加哪一个测试来证明边界可靠？",
-                "如果智能助手给出的实现错了，你先看哪一段？",
+                "如果输入规模从 100 扩大到 100 万，这道题的瓶颈在哪里？为什么 O(n²) 会挂但 O(n) 不会？",
+                "你现在会补哪一组边界测试来证明代码的可靠性？为什么选这组？",
+                "假如 AI 助手给了你一版错的实现，例如用双重循环但忘了 break，你先看代码的哪一段来判断靠不靠谱？",
             ],
             scoring_points={
                 "correctness": 40,
@@ -675,6 +675,7 @@ def build_algorithm_assets(index: list[dict]) -> None:
                 "把题面改写成实现约束清单。",
                 "要求助手生成三组边界测试，然后手动补一组反例。",
                 "对生成代码做复杂度和边界审查。",
+                "把单题结论接到 TypeScript、React、Node.js、Supabase、Nginx 或 Vercel 项目里的一个真实薄弱点。",
             ],
             project_transfer="把局部算法能力迁移到列表过滤、搜索、调度或数据聚合模块。",
             interview_transfer="用 90 秒说清思路、复杂度、边界和失败样例。",
@@ -989,6 +990,7 @@ python scripts/smoke_skill_routes.py
 - 每道正式题必须是 `accepted` 状态，并具备来源、训练动作、评分点、追问和迁移场景。
 - 代码类题目必须有可运行测试数据；非代码类题目必须有明确评分清单。
 - 用户粘贴答案后要先过回答真实性门禁，识别模板化、浅层、过度像生成内容的答案。
+- 单题训练后必须接回工程迁移门禁，避免算法、八股和全栈项目能力继续割裂。
 - 主 `SKILL.md` 只负责训练路由，题库事实源来自 `assets/`。
 """,
     )
@@ -1007,7 +1009,7 @@ node_modules/
 ---
 name: real-tech-training-field
 description: 面向 AI IDE 的真实技术筛选训练场，基于结构化题库、代码样例、评分点和来源登记来分发每日训练、冷面模拟和项目迁移任务。
-version: 0.1.0
+version: 0.1.2
 ---
 
 # Real Tech Training Field
@@ -1017,7 +1019,7 @@ version: 0.1.0
 <!-- @场景: 用户在 AI IDE 中练习算法、八股、Debug、系统设计和项目拆解 -->
 
 > **一句话**: 这不是普通刷题工具，而是把题库、代码、测试、评分点和追问绑定起来的真实训练场。
-> **版本**: v0.1.0
+> **版本**: v0.1.2
 
 ## @工作流: 选择训练模式
 
@@ -1043,7 +1045,8 @@ version: 0.1.0
 - @动作: 使用题卡中的 `prompt`、`ai_ide_tasks`、`tests` 和 `scoring_points`。
 - @动作: 用户提交答案后，先执行回答真实性门禁；疑似直接粘贴的浅层生成内容，不允许直接算完成。
 - @动作: 代码题必须运行测试；非代码题必须按评分清单判定。
-- @动作: 训练结束输出今日证据：做了什么判断、错在哪里、有没有自欺迹象、下一次修补什么、如何迁移到项目和面试表达。
+- @动作: 再执行单题工程迁移门禁；如果只能说出题解，不能连接到 TypeScript、React、Node.js、Supabase、Nginx、Vercel 或真实全栈项目，不算完整完成。
+- @动作: 训练结束输出今日证据：做了什么判断、错在哪里、有没有自欺迹象、工程薄弱点是什么、下一次修补什么、如何迁移到项目和面试表达。
 
 ## @工作流: 回答真实性门禁
 
@@ -1060,6 +1063,21 @@ version: 0.1.0
 - @动作: 输出修补任务：至少补 3 个能打破错误实现的测试，说明每个测试要证明什么。
 - @参考: 详细规则见 `references/answer-authenticity-gate.md`。
 
+## @工作流: 单题工程迁移门禁
+
+<!-- @类型: 子工作流 -->
+<!-- @验证点: 单题训练能立即连接到 vibecoding 时代的真实工程能力，而不是孤立刷题 -->
+<!-- @验证方式: 抽取算法题，检查是否追问规模、边界测试、生成实现审查和全栈迁移 -->
+<!-- @ID: wf-vibe-engineering-transfer-gate -->
+
+- @前提: 默认用户能力是割裂的，一边做全栈项目，一边补算法、TypeScript、React、Node.js、Supabase、Nginx、Vercel。
+- @动作: 每道单题结束前都要回答：这道题会在真实项目哪个环节变成问题，前端状态、API、数据库、缓存、部署、日志或性能瓶颈中至少命中一个。
+- @动作: 算法题必须追加三条追问：输入规模从 100 到 100 万的瓶颈；现在要补哪组边界测试；如果 AI 助手给了错误实现，先审哪一段。
+- @动作: 八股题必须追加一个工程场景：这个机制在 React 页面、Node 服务、Supabase 数据访问、Nginx 转发或 Vercel 部署中怎么出错。
+- @动作: Debug 题必须追加一个接管动作：先写能打破错误实现的测试，再决定是否重写。
+- @动作: 如果用户只完成单题答案但说不出工程迁移，判定为“局部会了，工程提升不足”，并生成下一次项目化修补任务。
+- @参考: 详细规则见 `references/vibe-engineering-transfer-gate.md`。
+
 ## @工作流: 冷面模拟
 
 <!-- @类型: 子工作流 -->
@@ -1069,6 +1087,7 @@ version: 0.1.0
 
 - @动作: 限时输出，不提前给答案。
 - @动作: 根据 `follow_up_questions` 连续追问。
+- @动作: 每次冷面模拟至少追问一次工程迁移，防止用户只在孤立题目里表现正常。
 - @动作: 若用户答案有明显生成痕迹或自欺倾向，先戳破，再继续追问。
 - @动作: 根据 `scoring_points` 直接判定，不把失败包装成成功。
 - @动作: 若未通过，记录失败点并生成下一次修补任务。
@@ -1079,12 +1098,14 @@ version: 0.1.0
 - 来源登记: `assets/sources/source-registry.yaml`
 - 代码样例: `assets/code-bank/`
 - 回答真实性门禁: `references/answer-authenticity-gate.md`
+- 工程迁移门禁: `references/vibe-engineering-transfer-gate.md`
 - 校验入口: `scripts/`
 
 ## 版本历史
 
 - v0.1.0: 建立 300 道正式训练资产、来源登记、代码测试和校验脚本。
 - v0.1.1: 加入回答真实性门禁，识别未经消化的浅层生成内容并要求补真实测试。
+- v0.1.2: 加入单题工程迁移门禁，强制连接 vibecoding、全栈项目和高压追问。
 """,
     )
     write_text(
@@ -1185,6 +1206,55 @@ tests:
 """,
     )
     write_text(
+        ROOT / "references" / "vibe-engineering-transfer-gate.md",
+        """
+# Vibe Engineering Transfer Gate
+
+这个门禁解决一个核心问题：单题会做，不等于工程能力提升。用户经常是割裂的，一边在做全栈项目，一边零散补算法、TypeScript、React、Node.js、Supabase、Nginx、Vercel。Skill 必须把每道题拉回真实工程动作。
+
+## 每题结束前必须回答
+
+1. 这道题在真实项目的哪个环节会出现：前端状态、API、数据库、缓存、部署、日志、性能瓶颈或代码审查。
+2. 如果把输入规模、用户量或数据量扩大，第一处瓶颈是什么。
+3. 现在补哪组测试最能证明可靠性，为什么。
+4. 如果 AI 助手给出一版看起来能跑但有缺陷的实现，先检查哪一段，怎么用测试打破它。
+
+## 算法题固定追问
+
+Q1: 如果输入规模从 100 扩大到 100 万，这道题的瓶颈在哪里？为什么 O(n²) 会挂但 O(n) 不会？
+
+Q2: 你现在会补哪一组边界测试来证明代码的可靠性？为什么选这组？
+
+Q3: 假如 AI 助手给了你一版错的实现，例如用双重循环但忘了 break，你先看代码的哪一段来判断靠不靠谱？
+
+## 全栈迁移示例
+
+- TypeScript：类型是否能表达输入约束，还是只是假装安全。
+- React：这个数据结构会不会影响列表渲染、状态同步或重复请求。
+- Node.js：接口层如何校验输入、处理超时和错误响应。
+- Supabase：查询规模、索引、权限规则和分页是否会成为瓶颈。
+- Nginx：转发、缓存、请求体大小或超时配置是否会放大问题。
+- Vercel：冷启动、边缘执行、构建产物或环境变量是否影响可靠性。
+
+## 判定规则
+
+- 只给题解，不给工程迁移：未完成。
+- 只说“可以用于项目”，不说明在哪个模块出问题：未完成。
+- 只说复杂度，不说明规模变化后的瓶颈：未完成。
+- 能把题目结论转成一个全栈项目修补任务：通过。
+
+## 输出格式
+
+```text
+工程薄弱点：
+规模追问：
+边界测试：
+AI 实现审查：
+项目化修补任务：
+```
+""",
+    )
+    write_text(
         ROOT / "references" / "scoring-rubric.md",
         """
 # Scoring Rubric
@@ -1211,6 +1281,17 @@ tests:
 - 不能说明测试为什么能打破错误实现。
 
 判定语气要直接：这个答案真实面试中过不了。然后给出具体修补任务。
+
+## 单题工程迁移门禁
+
+每道题必须连接到真实工程，否则只是局部刷题。通过标准：
+
+- 能说清这题在 TypeScript、React、Node.js、Supabase、Nginx、Vercel 或全栈项目中的具体落点。
+- 能回答输入规模从 100 到 100 万时的瓶颈。
+- 能补一组边界测试并说明为什么。
+- 能审查一版错误的 AI 实现，而不是直接相信它。
+
+不能连接到工程场景时，判定为“局部会了，工程提升不足”。
 
 ## 通用评分
 
@@ -1495,9 +1576,18 @@ def read_yaml(path: Path) -> dict:
 
 def main() -> None:
     skill_text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
-    for marker in ["回答真实性门禁", "真实面试中过不了", "happy path"]:
+    for marker in ["wf-answer-authenticity-gate", "wf-vibe-engineering-transfer-gate", "happy path", "TypeScript", "Supabase", "Vercel"]:
         if marker not in skill_text:
-            raise SystemExit(f"FAIL: missing authenticity gate marker: {marker}")
+            raise SystemExit(f"FAIL: missing skill marker: {marker}")
+    transfer_text = (ROOT / "references" / "vibe-engineering-transfer-gate.md").read_text(encoding="utf-8")
+    for marker in ["Q1:", "Q2:", "Q3:", "TypeScript", "React", "Node.js", "Supabase", "Nginx", "Vercel"]:
+        if marker not in transfer_text:
+            raise SystemExit(f"FAIL: missing transfer marker: {marker}")
+    if "version: 0.1.2" not in skill_text or "v0.1.2" not in skill_text:
+        raise SystemExit("FAIL: skill version metadata must match v0.1.2")
+    alg001 = read_yaml(ROOT / "assets" / "question-bank" / "algorithm" / "ALG001.yaml")
+    if "动态规划" in alg001["standard_solution"]["summary"]:
+        raise SystemExit("FAIL: ALG001 summary must not imply dynamic programming")
     index = read_yaml(INDEX)
     assets = index["assets"]
     sample = random.Random(7).sample(assets, 10)
@@ -1515,6 +1605,15 @@ def main() -> None:
                 "scoring_points": data["scoring_points"],
             }
         )
+    for item in rendered:
+        data = read_yaml(ROOT / next(entry["path"] for entry in assets if entry["id"] == item["id"]))
+        if not data.get("project_transfer"):
+            raise SystemExit(f"FAIL: {data['id']} missing project_transfer")
+        if data["type"] == "algorithm":
+            questions = "\n".join(data.get("follow_up_questions", []))
+            for marker in ["100", "100 万", "边界测试", "AI 助手"]:
+                if marker not in questions:
+                    raise SystemExit(f"FAIL: {data['id']} missing algorithm transfer follow-up marker: {marker}")
     if len(rendered) != 10:
         raise SystemExit("FAIL: smoke route did not render 10 tasks")
     if not any(item["mode"] == "cold" for item in rendered):
