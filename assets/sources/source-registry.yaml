@@ -1,0 +1,91 @@
+version: 0.1.0
+policy:
+  default_usage: reference_only
+  no_direct_copy: true
+  accepted_asset_rule: Asset content must be internally authored and independently
+    reviewable.
+sources:
+- id: the-algorithms-typescript
+  repo: TheAlgorithms/TypeScript
+  url: https://github.com/TheAlgorithms/TypeScript
+  license: MIT
+  usage: reference_only
+  priority: high
+  usable_for:
+  - algorithm
+  - debug_review
+  copy_policy: Do not copy source files. Use as implementation-pattern reference only.
+  notes: 算法分类和复杂度基线参考。
+- id: interactive-coding-challenges
+  repo: donnemartin/interactive-coding-challenges
+  url: https://github.com/donnemartin/interactive-coding-challenges
+  license: Apache-2.0
+  usage: reference_only
+  priority: high
+  usable_for:
+  - algorithm
+  - debug_review
+  copy_policy: Do not copy prompts or tests. Rebuild internal tasks and cases.
+  notes: 编码挑战、约束、测试思路参考。
+- id: system-design-primer
+  repo: donnemartin/system-design-primer
+  url: https://github.com/donnemartin/system-design-primer
+  license: CC-BY-4.0
+  usage: reference_only
+  priority: high
+  usable_for:
+  - system_design
+  - project_vibe
+  copy_policy: Do not copy answers. Keep attribution and rewrite internal rubrics.
+  notes: 系统设计主题和追问角度参考。
+- id: greatfrontend-react-questions
+  repo: greatfrontend/top-reactjs-interview-questions
+  url: https://github.com/greatfrontend/top-reactjs-interview-questions
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+  priority: high
+  usable_for:
+  - frontend
+  copy_policy: Do not copy explanations or wording. Use topic path only.
+  notes: React 题目主题和覆盖矩阵参考。
+- id: sudheerj-react-questions
+  repo: sudheerj/reactjs-interview-questions
+  url: https://github.com/sudheerj/reactjs-interview-questions
+  license: MIT
+  usage: reference_only
+  priority: medium
+  usable_for:
+  - frontend
+  copy_policy: Do not copy answer cards. Use as topic inventory and rewrite all content.
+  notes: React 大规模问题清单参考。
+- id: sudheerj-javascript-questions
+  repo: sudheerj/javascript-interview-questions
+  url: https://github.com/sudheerj/javascript-interview-questions
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+  priority: medium
+  usable_for:
+  - frontend
+  - backend
+  copy_policy: Do not copy answer cards. Use as topic inventory and rewrite all content.
+  notes: JavaScript 机制题主题参考。
+- id: devinterview-node-questions
+  repo: Devinterview-io/node-interview-questions
+  url: https://github.com/Devinterview-io/node-interview-questions
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+  priority: medium
+  usable_for:
+  - backend
+  copy_policy: Do not copy answers. Use topic path only and rewrite all content.
+  notes: Node.js 后端题目主题参考。
+- id: ajay-jagtap-node-questions
+  repo: ajay-jagtap/nodejs-interview-questions
+  url: https://github.com/ajay-jagtap/nodejs-interview-questions
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+  priority: low
+  usable_for:
+  - backend
+  copy_policy: Do not copy answers. Use topic path only and rewrite all content.
+  notes: Node.js 补充题目主题参考。

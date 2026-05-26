@@ -1,0 +1,61 @@
+id: SD006
+type: system_design
+status: accepted
+difficulty: hard
+time_limit_minutes: 25
+title: '搜索建议服务: 需求拆解与冷面追问'
+source_refs:
+- source_id: system-design-primer
+  repo: donnemartin/system-design-primer
+  url: https://github.com/donnemartin/system-design-primer
+  path: solutions/搜索建议服务
+  license: CC-BY-4.0
+  usage: reference_only
+training_action: 限时拆需求、列约束、画核心数据流，再接受追问。
+prompt: 设计一个「搜索建议服务」。先问清需求，再给出核心模块、数据流、瓶颈和降级方案。
+knowledge_points:
+- 搜索建议服务
+- 需求澄清
+- 容量估算
+- 一致性权衡
+- 降级策略
+standard_solution:
+  key_points:
+  - 先澄清用户规模、读写比例、SLO 和约束。
+  - 给出核心模块和数据流。
+  - 明确一个主要瓶颈及其取舍。
+  - 说明失败降级和观测指标。
+  answer_shape: 澄清 -> 规模 -> 架构 -> 数据 -> 瓶颈 -> 追问
+bruteforce_solution: 直接堆组件名，不说明为什么需要，也不说明失败时怎么处理。
+common_mistakes:
+- 没有澄清需求就画方案。
+- 只说缓存、队列、分库，不讲取舍。
+- 不能承受一致性或容量追问。
+edge_cases:
+- 热点用户
+- 下游服务失败
+- 数据重复
+- 读写峰值突增
+follow_up_questions:
+- 如果写入量扩大 10 倍，第一处瓶颈在哪里？
+- 你选择强一致还是最终一致，代价是什么？
+- 如何证明这个方案上线后能被观测？
+scoring_points:
+  clarification: 20
+  architecture: 30
+  tradeoff: 30
+  pressure_response: 20
+ai_ide_tasks:
+- 让助手生成需求澄清清单。
+- 审查架构是否只是堆名词。
+- 把追问整理成下一次修补任务。
+project_transfer: 迁移到端到端项目设计、后端模块拆分和可观测性方案。
+interview_transfer: 在高压环境下保持结构化表达和取舍意识。
+tests:
+  kind: rubric
+  checklist:
+  - 先澄清
+  - 有数据流
+  - 有瓶颈
+  - 有取舍
+  - 能抗追问

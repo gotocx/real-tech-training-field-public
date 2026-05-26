@@ -1,0 +1,60 @@
+id: ALG060
+type: algorithm
+status: accepted
+difficulty: easy
+time_limit_minutes: 25
+title: '课程依赖拓扑训练 5: 先测后写'
+source_refs:
+- source_id: the-algorithms-typescript
+  repo: TheAlgorithms/TypeScript
+  url: https://github.com/TheAlgorithms/TypeScript
+  path: src/algorithms/graphs
+  license: MIT
+  usage: reference_only
+- source_id: interactive-coding-challenges
+  repo: donnemartin/interactive-coding-challenges
+  url: https://github.com/donnemartin/interactive-coding-challenges
+  path: questions/课程依赖拓扑
+  license: Apache-2.0
+  usage: reference_only
+training_action: 先让智能编程助手给出实现计划，再由用户补测试、审复杂度、运行标准样例。
+prompt: 给定课程数和先修关系，判断是否能完成全部课程。要求说明如何发现环。
+knowledge_points:
+- 入度表
+- 队列拓扑排序
+- 处理孤立节点
+standard_solution:
+  summary: 使用可解释的数据结构或动态规划状态，先覆盖边界，再提交实现。
+  file: assets/code-bank/standard/ALG060.js
+  expected_complexity: O(V + E) time, O(V + E) space
+bruteforce_solution:
+  summary: 用直接枚举或完整扫描得到答案，用于校验小输入。
+  risk: 大输入下会超时，必须说明为什么正式方案更稳。
+common_mistakes:
+- 只让工具生成代码但不补边界测试。
+- 能跑通样例但说不清复杂度。
+- 忽略空输入、重复值或非法参数。
+edge_cases:
+- 空输入
+- 单元素
+- 重复值
+- 负数或极端边界
+follow_up_questions:
+- 如果输入规模扩大 100 倍，瓶颈在哪里？
+- 你会增加哪一个测试来证明边界可靠？
+- 如果智能助手给出的实现错了，你先看哪一段？
+scoring_points:
+  correctness: 40
+  tests: 25
+  complexity: 20
+  explanation: 15
+ai_ide_tasks:
+- 把题面改写成实现约束清单。
+- 要求助手生成三组边界测试，然后手动补一组反例。
+- 对生成代码做复杂度和边界审查。
+project_transfer: 把局部算法能力迁移到列表过滤、搜索、调度或数据聚合模块。
+interview_transfer: 用 90 秒说清思路、复杂度、边界和失败样例。
+tests:
+  kind: executable
+  file: assets/code-bank/tests/ALG060.json
+  runner: scripts/run_code_tests.py

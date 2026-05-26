@@ -1,0 +1,58 @@
+id: FE011
+type: frontend
+status: accepted
+difficulty: hard
+time_limit_minutes: 12
+title: 'Promise 错误传播: 机制判断与工程迁移'
+source_refs:
+- source_id: greatfrontend-react-questions
+  repo: greatfrontend/top-reactjs-interview-questions
+  url: https://github.com/greatfrontend/top-reactjs-interview-questions
+  path: topics/Promise 错误传播
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+training_action: 先回答机制，再判断一个错误回答，最后落到真实组件或页面场景。
+prompt: 围绕「Promise 错误传播」给出标准解释、工程场景、常见误判和一个能验证理解的小例子。
+knowledge_points:
+- Promise 错误传播
+- 机制边界
+- 工程副作用
+- 错误回答识别
+standard_solution:
+  key_points:
+  - 先定义概念，再说明触发条件和边界。
+  - 必须给出真实组件、状态流或构建场景。
+  - 要能指出错误回答为什么会在项目中造成问题。
+  answer_shape: 定义 -> 机制 -> 例子 -> 风险 -> 追问
+bruteforce_solution: 只背定义但不能说明工程影响，真实面试中会被追问击穿。
+common_mistakes:
+- 把工具生成的解释当成事实，不核对机制。
+- 只说概念，不说触发条件。
+- 不能把答案迁移到组件设计或性能问题。
+edge_cases:
+- 异步更新
+- 重复渲染
+- 异常输入
+- 服务端与客户端状态不一致
+follow_up_questions:
+- 这个机制在真实项目里什么时候会出问题？
+- 如果生成代码看起来可用，你怎么验证它没有隐藏渲染问题？
+- 请给一个最小复现。
+scoring_points:
+  definition: 25
+  mechanism: 30
+  engineering_case: 25
+  follow_up: 20
+ai_ide_tasks:
+- 要求助手写一个最小示例。
+- 审查示例是否真的覆盖该机制。
+- 补一个会失败的边界场景。
+project_transfer: 迁移到 React/TypeScript 页面、组件库、表单或数据加载模块。
+interview_transfer: 用结构化回答抵抗追问，不把背诵答案当成理解。
+tests:
+  kind: rubric
+  checklist:
+  - 概念准确
+  - 机制完整
+  - 有工程例子
+  - 能指出错误回答

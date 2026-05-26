@@ -1,0 +1,30 @@
+[
+  {
+    "input": {
+      "s": "listen",
+      "t": "silent"
+    },
+    "expected": true
+  },
+  {
+    "input": {
+      "s": "rat",
+      "t": "car"
+    },
+    "expected": false
+  },
+  {
+    "input": {
+      "s": "",
+      "t": ""
+    },
+    "expected": true
+  },
+  {
+    "input": {
+      "s": "aacc",
+      "t": "ccac"
+    },
+    "expected": false
+  }
+]

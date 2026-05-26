@@ -1,0 +1,62 @@
+id: DBG015
+type: debug_review
+status: accepted
+difficulty: medium
+time_limit_minutes: 20
+title: '最长无重复子串: 接管错误实现'
+source_refs:
+- source_id: the-algorithms-typescript
+  repo: TheAlgorithms/TypeScript
+  url: https://github.com/TheAlgorithms/TypeScript
+  path: src/algorithms/strings
+  license: MIT
+  usage: reference_only
+- source_id: interactive-coding-challenges
+  repo: donnemartin/interactive-coding-challenges
+  url: https://github.com/donnemartin/interactive-coding-challenges
+  path: debug/最长无重复子串
+  license: Apache-2.0
+  usage: reference_only
+training_action: 先运行错误代码，再用测试定位缺陷，最后修复并解释根因。
+prompt: 给你一段看起来合理但会失败的「最长无重复子串」实现。不要先重写，先找最小失败用例。
+knowledge_points:
+- 最长无重复子串
+- 测试设计
+- 根因定位
+- 修复验证
+standard_solution:
+  summary: 通过失败用例定位边界或状态更新错误，再做最小修复。
+  file: assets/code-bank/standard/DBG015.js
+  expected_complexity: O(n) time, O(min(n, alphabet)) space
+bruteforce_solution:
+  summary: 直接替换成全新实现。
+  risk: 可能掩盖根因，无法证明自己识别了错误代码的失败点。
+common_mistakes:
+- 不运行测试就凭感觉修。
+- 只修样例，不补反例。
+- 不能说明错误来自边界、状态还是复杂度。
+edge_cases:
+- 最小输入
+- 重复值
+- 非法参数
+- 边界窗口
+follow_up_questions:
+- 哪个测试最先暴露错误？
+- 这个错误如果进项目会造成什么用户影响？
+- 你如何防止助手下次生成同类错误？
+scoring_points:
+  failure_case: 30
+  root_cause: 30
+  repair: 25
+  explanation: 15
+ai_ide_tasks:
+- 要求助手先解释错误代码意图。
+- 手动补一个失败测试。
+- 让助手修复后再次审查复杂度和边界。
+project_transfer: 迁移到接管生成代码、审查 PR、修复线上边界问题。
+interview_transfer: 展示调试顺序，而不是只给最终答案。
+tests:
+  kind: executable
+  file: assets/code-bank/tests/DBG015.json
+  runner: scripts/run_code_tests.py
+  buggy_file: assets/code-bank/buggy/DBG015.js

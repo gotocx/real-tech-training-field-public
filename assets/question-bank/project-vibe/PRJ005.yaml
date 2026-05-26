@@ -1,0 +1,59 @@
+id: PRJ005
+type: project_vibe
+status: accepted
+difficulty: medium
+time_limit_minutes: 30
+title: '日志检索面板: 从需求聊天到可执行 md'
+source_refs:
+- source_id: system-design-primer
+  repo: donnemartin/system-design-primer
+  url: https://github.com/donnemartin/system-design-primer
+  path: project-practice/日志检索面板
+  license: CC-BY-4.0
+  usage: reference_only
+training_action: 用 AI IDE 做需求澄清、约束整理、任务拆分、测试计划和实现审查。
+prompt: 你要做一个「日志检索面板」。先和助手聊清楚需求，再输出一份可执行开发 md，并设计验收测试。
+knowledge_points:
+- 需求澄清
+- 任务拆解
+- 测试优先
+- 生成代码审查
+- 项目迁移
+standard_solution:
+  key_points:
+  - 需求 md 必须有目标、非目标、用户流、接口或组件边界。
+  - 必须列出测试计划和风险清单。
+  - 必须说明哪些代码可以让助手生成，哪些必须人工审查。
+  answer_shape: 聊天摘要 -> 需求 md -> 任务拆分 -> 测试 -> 审查点
+bruteforce_solution: 只让工具直接生成完整项目，不写约束、不写测试、不审查输出。
+common_mistakes:
+- 没有先把需求说清楚。
+- 没有定义完成标准。
+- 把生成结果当成可交付成品。
+edge_cases:
+- 用户需求变更
+- 接口遗漏
+- 状态不同步
+- 测试无法覆盖关键路径
+follow_up_questions:
+- 这份 md 中哪个需求最模糊？
+- 你会要求助手先写哪一组测试？
+- 如果生成项目能跑但结构混乱，你如何接管？
+scoring_points:
+  clarity: 25
+  task_breakdown: 25
+  tests: 25
+  review: 25
+ai_ide_tasks:
+- 进行 5 轮需求澄清。
+- 生成开发 md 后人工删掉含糊表述。
+- 根据 md 生成测试清单，再审查实现计划。
+project_transfer: 直接服务于真实全栈、服务器、TypeScript 和 React 项目训练。
+interview_transfer: 把项目经历表达成需求、取舍、验证和复盘，而不是堆功能名。
+tests:
+  kind: rubric
+  checklist:
+  - 需求清楚
+  - 任务可执行
+  - 测试可验收
+  - 审查点明确

@@ -1,0 +1,12 @@
+module.exports = function solve(input) {
+  const s = input.s || "";
+  const pairs = { ")": "(", "]": "[", "}": "{" };
+  const stack = [];
+  for (const ch of s) {
+    if (ch === "(" || ch === "[" || ch === "{") stack.push(ch);
+    else if (pairs[ch]) {
+      if (stack.pop() !== pairs[ch]) return false;
+    }
+  }
+  return stack.length === 0;
+};

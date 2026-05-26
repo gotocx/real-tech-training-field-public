@@ -1,0 +1,58 @@
+id: BE038
+type: backend
+status: accepted
+difficulty: hard
+time_limit_minutes: 14
+title: '连接池耗尽排查: 服务端可靠性判断'
+source_refs:
+- source_id: ajay-jagtap-node-questions
+  repo: ajay-jagtap/nodejs-interview-questions
+  url: https://github.com/ajay-jagtap/nodejs-interview-questions
+  path: topics/连接池耗尽排查
+  license: unconfirmed-2026-05-26
+  usage: reference_only
+training_action: 把后端知识点变成接口、错误处理、测试和可观测性判断。
+prompt: 围绕「连接池耗尽排查」设计一个小型服务场景，说明风险、测试、失败响应和修复策略。
+knowledge_points:
+- 连接池耗尽排查
+- 接口边界
+- 失败模式
+- 可观测性
+standard_solution:
+  key_points:
+  - 明确请求输入、状态变化和失败输出。
+  - 说明并发、重试、超时或数据一致性风险。
+  - 给出至少一个测试或日志指标。
+  answer_shape: 场景 -> 风险 -> 约束 -> 测试 -> 修复
+bruteforce_solution: 只给框架 API 用法，不讨论失败路径和数据边界。
+common_mistakes:
+- 忽略超时、重试和幂等。
+- 把异常全部吞掉。
+- 没有说明如何验证服务真的可靠。
+edge_cases:
+- 重复请求
+- 空输入
+- 并发写入
+- 下游失败
+follow_up_questions:
+- 如果请求被重放两次会发生什么？
+- 如何观测这个问题已经发生？
+- 你会让智能助手先生成哪一类测试？
+scoring_points:
+  api_boundary: 25
+  failure_modes: 30
+  tests: 25
+  explanation: 20
+ai_ide_tasks:
+- 把需求整理成接口契约。
+- 要求助手生成失败路径测试。
+- 审查生成代码是否丢失幂等或错误响应。
+project_transfer: 迁移到 Node 服务、API 网关、任务队列或数据访问层。
+interview_transfer: 用服务边界和失败模式回答，而不是只背框架概念。
+tests:
+  kind: rubric
+  checklist:
+  - 接口边界明确
+  - 失败模式完整
+  - 有测试策略
+  - 有可观测性
